@@ -12,32 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfcf417bceeba474b8d12501c906cef3, type: 3}
   m_Name: YCConfigData
   m_EditorClassIdentifier: 
-  gameYcId: 
+  gameYcId: 6c98e6
   Vibration: 0
   VibrationDebugLog: 0
   SoundEffect: 0
   SoundMusic: 0
   InAppRemoveAds: 
   InAppRemoveAdsCanRemoveInBanner: 1
-  InAppConsumables: []
+  NotifAuthorizationAlert: 1
+  NotifAuthorizationBadge: 1
+  NotifAuthorizationSound: 1
   ABVersion: 1
-  ABPercentMax: 1
-  ABPercent: 0.05
   ABForcedSample: 
   ABSamples: []
   RateBoxShow: 0
+  BannerDisplayOnInit: 1
   InterstitialInterval: 30
-  Name: 
-  FbAppId: 
+  Name: Tower raid
+  FbAppId: 4511793322252046
   appleId: 
   MmpAdjust: 0
   MmpAdjustAppToken: 
-  MmpSingular: 0
-  MmpTenjin: 0
+  MmpTenjin: 1
+  AdMobAndroidAppId: 
+  AdMobIosAppId: 
   IosInterstitial: 
   IosRewarded: 
   IosBanner: 
   AndroidInterstitial: 
   AndroidRewarded: 
   AndroidBanner: 
-  MaxForceInit: 0

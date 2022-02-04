@@ -13,7 +13,7 @@ namespace YsoCorp {
         private static float SPEED_ACCELERATION = 0.5f;
         private static float SPEED = 4f;
         private static float ROTATION_SENSITIVITY = 0.2f;
-        private static float MOVE_SENSITIVITY = 0.01f; 
+        private static float MOVE_SENSITIVITY = 0.01f;
         private static float MAX_ANGLE = 35f;
 
         public bool movementsWithRotation;
@@ -30,84 +30,109 @@ namespace YsoCorp {
         public bool isAlive { get; protected set; }
         public float speed { get; private set; }
 
-        protected override void Awake() {
+        protected override void Awake()
+        {
             this._rigidbody = this.GetComponent<Rigidbody>();
             this._animator = this.GetComponentInChildren<Animator>();
             this._ragdollBehviour = this.GetComponent<RagdollBehaviour>();
             this.isAlive = true;
-
             this.game.onStateChanged += this.Launch;
         }
 
-        private void Launch(Game.States states) {
-            if (states == Game.States.Playing) {
-                this._isMoving = true;
+        private void Launch(Game.States states)
+        {
+            if (states == Game.States.Playing)
+            {
+                //this._isMoving = true;
                 this._animator?.SetBool("Moving", true);
-            } else if (states == Game.States.Win) {
+            }
+            else if (states == Game.States.Win)
+            {
                 this._isMoving = false;
                 this._animator?.SetBool("Moving", false);
                 this._animator?.SetTrigger("Win");
-            } else if (states == Game.States.Lose) {
+            }
+            else if (states == Game.States.Lose)
+            {
                 this._isMoving = false;
             }
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             this.isAlive = true;
             this._isMoving = false;
-            if (this._animator != null) {
+            if (this._animator != null)
+            {
                 this._animator.enabled = true;
                 this._animator.SetBool("Moving", false);
             }
 
-            Transform spot = this.game.map.GetStartingPos();
-            this.transform.position = spot.position;
-            this.transform.rotation = spot.rotation;
-            this._rigidbody.velocity = Vector3.zero;
-            this._ragdollBehviour?.Reset();
-            this.cam.Follow(this.transform);
+            //Transform spot = this.game.map.GetStartingPos();
+            //this.transform.position = spot.position;
+            //this.transform.rotation = spot.rotation;
+            //this._rigidbody.velocity = Vector3.zero;
+            //this._ragdollBehviour?.Reset();
+            //this.cam.Follow(this.transform);
+            //this.cam.Follow(spot);
 
-            this._rotation = Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y, 0);
+            //this._rotation = Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y, 0);
         }
 
-        public void Die(Transform killer) {
+        public void Die(Transform killer)
+        {
             this.isAlive = false;
 
-            if (this._ragdollBehviour != null) {
+            if (this._ragdollBehviour != null)
+            {
                 this._ragdollBehviour.EnableRagdoll(killer);
                 this.cam.Follow(this._ragdollBehviour.hips);
             }
         }
 
-        private void FixedUpdate() {
-            if (this.game.state != Game.States.Playing || this.isAlive == false) {
-                return;
-            }
+        private void FixedUpdate()
+        {
+            //Transform spot = this.transform;
+            //spot.position = spot.position + new Vector3(0, -1, 0);
+            //Debug.Log(spot.position);
+            //this.cam.Follow(spot + new Vector3(0, -1, 0));
+            //if (this.game.state != Game.States.Playing || this.isAlive == false)
+            //{
+            //    return;
+            //}
 
-            if (this._isMoving == true) {
-                this.speed += SPEED_ACCELERATION;
-            } else {
-                this.speed -= SPEED_ACCELERATION * 3f;
-            }
+            //if (this._isMoving == true)
+            //{
+            //    this.speed += SPEED_ACCELERATION;
+            //}
+            //else
+            //{
+            //    this.speed -= SPEED_ACCELERATION * 3f;
+            //}
 
-            this.speed = Mathf.Clamp(this.speed, 0, SPEED);
-            if (this.speed != 0) {
-                this._rigidbody.MovePosition(this._rigidbody.position + this.transform.forward * this.speed * Time.fixedDeltaTime + this._slideMove);
-                this._rigidbody.MoveRotation(Quaternion.RotateTowards(this._rigidbody.rotation, this._rotation, SPEED_ROTATION));
-                this._slideMove = Vector3.zero;
+            //this.speed = Mathf.Clamp(this.speed, 0, SPEED);
+            //if (this.speed != 0)
+            //{
+            //    this._rigidbody.MovePosition(this._rigidbody.position + this.transform.forward * this.speed * Time.fixedDeltaTime + this._slideMove);
+            //    this._rigidbody.MoveRotation(Quaternion.RotateTowards(this._rigidbody.rotation, this._rotation, SPEED_ROTATION));
+            //    this._slideMove = Vector3.zero;
 
-                if (this.preventFall == true) {
-                    this.BlockPlayerFromFalling();
-                }
-            }
+            //    if (this.preventFall == true)
+            //    {
+            //        this.BlockPlayerFromFalling();
+            //    }
+            //}
         }
 
-        private void BlockPlayerFromFalling() {
+        private void BlockPlayerFromFalling()
+        {
             this._rigidbody.position = new Vector3(Mathf.Clamp(this._rigidbody.position.x, LEFT_LIMIT, RIGHT_LIMIT), this._rigidbody.position.y, this._rigidbody.position.z);
         }
 
-        public override void GesturePanDown() {
-            if (this.game.state != Game.States.Playing || this.isAlive == false) {
+        public override void GesturePanDown()
+        {
+            if (this.game.state != Game.States.Playing || this.isAlive == false)
+            {
                 return;
             }
 
@@ -116,31 +141,37 @@ namespace YsoCorp {
             this._isMoving = true;
         }
 
-        public override void GesturePanDeltaX(float deltaX) {
-            if (this.game.state != Game.States.Playing || this.isAlive == false) {
+        public override void GesturePanDeltaX(float deltaX)
+        {
+            if (this.game.state != Game.States.Playing || this.isAlive == false)
+            {
                 return;
             }
 
-            if (this.movementsWithRotation == true) {
-                this.RotateClamped(deltaX);
-            } else {
-                this.Slide(deltaX);
-            }
+            //if (this.movementsWithRotation == true) {
+            //    this.RotateClamped(deltaX);
+            //} else {
+            //    this.Slide(deltaX);
+            //}
         }
 
-        private void Slide(float deltaX) {
-            this._slideMove = new Vector3(deltaX * MOVE_SENSITIVITY, 0 , 0);
+        private void Slide(float deltaX)
+        {
+            //this._slideMove = new Vector3(deltaX * MOVE_SENSITIVITY, 0 , 0);
         }
 
-        public override void GesturePanUp() {
-            if (this.game.state != Game.States.Playing || this.isAlive == false) {
+        public override void GesturePanUp()
+        {
+            if (this.game.state != Game.States.Playing || this.isAlive == false)
+            {
                 return;
             }
 
             this.ResetRotation();
         }
 
-        private void ResetRotation() {
+        private void ResetRotation()
+        {
             float duration = this._rotation.y / 40;
             this._rotationTween.Kill();
 
@@ -150,11 +181,12 @@ namespace YsoCorp {
                 0, duration).SetEase(Ease.Linear);
         }
 
-        public void RotateClamped(float deltaX) {
+        public void RotateClamped(float deltaX)
+        {
             float eulerAngle = transform.localEulerAngles.y;
-            
+
             eulerAngle = (eulerAngle > 180) ? eulerAngle - 360 : eulerAngle;
-            
+
             float angle = eulerAngle + deltaX * ROTATION_SENSITIVITY;
             float clampedAngle = Mathf.Clamp(angle, -MAX_ANGLE, MAX_ANGLE);
 

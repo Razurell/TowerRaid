@@ -86,10 +86,10 @@ namespace YsoCorp {
         }
 
         void HideAllMenus() {
-            this.menuHome.Hide();
-            this.menuGame.Hide();
-            this.menuLose.Hide();
-            this.menuWin.Hide();
+            //this.menuHome.Hide();
+            //this.menuGame.Hide();
+            //this.menuLose.Hide();
+            //this.menuWin.Hide();
         }
 
     }

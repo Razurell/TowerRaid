@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 000
+  - 4511793322252046
   appLabels:
-  - App Name
+  - HyperCasual
   cookie: 1
   logging: 1
   status: 1
