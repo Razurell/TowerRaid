@@ -28,11 +28,12 @@ public class grapleGun : MonoBehaviour
         if (grapState == 1)
         {
             StartGrapple();
+            timeManager.doSlowTimeGrapple();
         }
         else if (grapState == 2)
         {
             StopGrapple();
-
+            timeManager.stopSlowTimeGrapple();
         }
         grapState = 0;
         //else if (!grapped)
@@ -96,9 +97,9 @@ public class grapleGun : MonoBehaviour
             joint.minDistance = distanceFromPoint * 0.25f;
 
             //Adjust these values to fit your game.
-            joint.spring = 4.5f;
-            joint.damper = 7f;
-            joint.massScale = 4.5f;
+            joint.spring = 14f;
+            joint.damper = 1f;
+            joint.massScale = 2f;
 
             lr.positionCount = 2;
             currentGrapplePosition = gunTip.position;
@@ -108,7 +109,7 @@ public class grapleGun : MonoBehaviour
     /// <summary>
     /// Call whenever we want to stop a grapple
     /// </summary>
-    void StopGrapple()
+    public void StopGrapple()
     {
         lr.positionCount = 0;
         Destroy(joint);

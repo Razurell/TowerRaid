@@ -2,7 +2,7 @@
 using UnityEngine;
 //namespace YsoCorp
 //{
-        public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
         private static float LEFT_LIMIT = -2f;
         private static float RIGHT_LIMIT = 2f;
@@ -24,7 +24,7 @@ using UnityEngine;
         //Rotation and look
         private float xRotation;
         private float sensitivity = 50f;
-        private float sensMultiplier = 1.2f;
+        private float sensMultiplier = 1.0f;
 
         //Movement
         public float moveSpeed = 4500;
@@ -91,20 +91,19 @@ using UnityEngine;
 
             if (this.grounded == false)
             {
-                this.speed += 3f;
+                this.speed += 5f;
             }
             //else
             //{
-            //    this.speed -= SPEED_ACCELERATION * 3f;
+            //    //this.speed -= SPEED_ACCELERATION * 3f;
+            //    this.speed = 0;
             //}
-
-            this.speed = Mathf.Clamp(this.speed, 0, SPEED);
-            if (this.speed != 0)
+            Debug.Log(this.speed);
+            //this.speed = Mathf.Clamp(this.speed, 0, SPEED);
+            if (this.speed != 0 && this.grounded == false)
             {
-                this.rb.MovePosition(this.rb.position + this.transform.forward * this.speed * Time.fixedDeltaTime);
-                Debug.Log(this.speed); 
-                Debug.Log(this.grounded);
-                this.rb.MoveRotation(Quaternion.RotateTowards(this.rb.rotation, this._rotation, SPEED_ROTATION));
+                //this.rb.MovePosition(this.rb.position + this.transform.forward * this.speed * Time.fixedDeltaTime);
+                //this.rb.MoveRotation(Quaternion.RotateTowards(this.rb.rotation, this._rotation, SPEED_ROTATION));
                 //this._slideMove = Vector3.zero;
 
                 //    if (this.preventFall == true)
@@ -112,10 +111,10 @@ using UnityEngine;
                 //        this.BlockPlayerFromFalling();
                 //    }
             }
-            Movement();
-        }
+        Movement();
+    }
 
-        private void Update()
+    private void Update()
         {
             MyInput();
             Look();
@@ -167,7 +166,7 @@ using UnityEngine;
             float xMag = mag.x, yMag = mag.y;
 
             //Counteract sliding and sloppy movement
-            CounterMovement(x, y, mag);
+            //CounterMovement(x, y, mag);
 
             //If holding jump && ready to jump, then jump
             if (readyToJump && jumping) Jump();
@@ -189,7 +188,7 @@ using UnityEngine;
             if (y < 0 && yMag < -maxSpeed) y = 0;
 
             //Some multipliers
-            float multiplier = 1f, multiplierV = 1f;
+            float multiplier = 1f, multiplierV = 1.5f;
 
             // Movement in air
             if (!grounded)
@@ -238,9 +237,9 @@ using UnityEngine;
             //float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
             //float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
 
-            float mouseX = joyStick.Horizontal * sensitivity * Time.fixedDeltaTime * sensMultiplier * (1 / Time.timeScale);
-            float mouseY = joyStick.Vertical * sensitivity * Time.fixedDeltaTime * sensMultiplier * (1 / Time.timeScale);
-        Debug.Log(Time.timeScale);
+            float mouseX = joyStick.Horizontal * sensitivity * Time.fixedDeltaTime * sensMultiplier;
+            float mouseY = joyStick.Vertical * sensitivity * Time.fixedDeltaTime * sensMultiplier;
+        
             //Find current look rotation
             Vector3 rot = playerCam.transform.localRotation.eulerAngles;
             desiredX = rot.y + mouseX;
@@ -317,6 +316,7 @@ using UnityEngine;
         /// </summary>
         private void OnCollisionStay(Collision other)
         {
+        Debug.Log(other.collider.name);
             //Make sure we are only checking for walkable layers
             int layer = other.gameObject.layer;
             if (whatIsGround != (whatIsGround | (1 << layer))) return;
@@ -342,7 +342,8 @@ using UnityEngine;
                 cancellingGrounded = true;
                 Invoke(nameof(StopGrounded), Time.deltaTime * delay);
             }
-        }
+        Debug.Log(this.grounded);
+    }
 
         private void StopGrounded()
         {

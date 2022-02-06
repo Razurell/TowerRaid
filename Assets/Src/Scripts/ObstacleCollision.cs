@@ -25,6 +25,7 @@ namespace YsoCorp {
 
         private void Finish() {
             this.game.Win();
+            Debug.Log("win");
         }
 
     }

@@ -25,7 +25,8 @@ namespace YsoCorp {
                     }
                     if (value == States.Home) {
                         this.HideAllMenus();
-                        this.menuHome.Display();
+                        //this.menuHome.Display();
+
                         this.Reset();
                     } else if (value == States.Playing) {
                         this.ycManager.OnGameStarted(this.dataManager.GetLevel());
@@ -86,10 +87,10 @@ namespace YsoCorp {
         }
 
         void HideAllMenus() {
-            //this.menuHome.Hide();
-            //this.menuGame.Hide();
-            //this.menuLose.Hide();
-            //this.menuWin.Hide();
+            this.menuHome.Hide();
+            this.menuGame.Hide();
+            this.menuLose.Hide();
+            this.menuWin.Hide();
         }
 
     }
